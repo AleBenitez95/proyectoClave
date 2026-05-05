@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  wordpress:
+    image: wordpress:latest
+    container_name: mi_wordpress
+    ports:
+      - "80:80"
+    restart: always
+    environment:
+      # Aquí le decimos que cruce la VPN para buscar la BD
+      WORDPRESS_DB_HOST: "172.26.0.2:3306" 
+      WORDPRESS_DB_USER: "tu_usuario"       # Pon el usuario de tu MySQL
+      WORDPRESS_DB_PASSWORD: "tu_password"  # Pon la contraseña de tu MySQL
+      WORDPRESS_DB_NAME: "wordpress"        # El nombre de la base de datos
+    volumes:
+      # Esto guarda tus temas y plugins para que no se borren si apagas el docker
+      - wp_datos:/var/www/html 
+
+volumes:
+  wp_datos:
